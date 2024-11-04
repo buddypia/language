@@ -39,14 +39,24 @@ export class StringStream {
   /// True if we are at the start of the line.
   sol(): boolean {return this.pos == 0}
 
-  /// Get the next code unit after the current position, or undefined
-  /// if we're at the end of the line.
-  peek() {return this.string.charAt(this.pos) || undefined}
+  // その他のメソッドも同様にマルチバイト対応
+  peek() {
+    if (this.pos < this.string.length) {
+      const char = this.string.codePointAt(this.pos)!
+      return String.fromCodePoint(char)
+    }
+    return null
+  }
 
   /// Read the next code unit and advance `this.pos`.
   next(): string | void {
-    if (this.pos < this.string.length)
-      return this.string.charAt(this.pos++)
+    if (this.pos < this.string.length) {
+      // 文字コードポイントで1文字進める
+      const char = this.string.codePointAt(this.pos)!
+      const size = char > 0xFFFF ? 2 : 1
+      this.pos += size
+      return String.fromCodePoint(char)
+    }
   }
 
   /// Match the next character against the given string, regular

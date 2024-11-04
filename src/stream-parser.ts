@@ -179,10 +179,10 @@ function findStartInFragments<State>(lang: StreamLanguage<State>, fragments: rea
 }
 
 const enum C {
-  ChunkSize = 2048,
-  MaxDistanceBeforeViewport = 1e5,
-  MaxIndentScanDist = 1e4,
-  MaxLineLength = 1e4
+  ChunkSize = 4096,
+  MaxDistanceBeforeViewport = 1e6,
+  MaxIndentScanDist = 1e5,
+  MaxLineLength = 1e5
 }
 
 class Parse<State> implements PartialParse {
